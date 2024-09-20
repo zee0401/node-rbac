@@ -1,19 +1,20 @@
-import express from "express";
-import dotenv from "dotenv";
+import express from 'express';
+import { connectDB } from './config/dbConnect.js';
+import dotenv from 'dotenv';
 
-import { connectDB } from "./config/dbConnect.js";
-dotenv.config();
+import authRoutes from './routes/auth.routes.js';
 
 const app = express();
+dotenv.config();
 
-//middleware
+// middleware
 app.use(express.json());
 
-//routes
+// routes
 
-//connect mongodb
+app.use('/api/auth', authRoutes);
 
 app.listen(process.env.PORT, () => {
   connectDB();
-  console.log("Server is running on port 3000");
+  console.log('Server is running on port 3000');
 });
