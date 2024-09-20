@@ -1,7 +1,7 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const userShema = new mongoose.Schema({
-  userName: {
+  username: {
     type: String,
     required: true,
     unique: true,
@@ -13,9 +13,11 @@ const userShema = new mongoose.Schema({
   role: {
     type: String,
     required: true,
-    enum: ["admin", "user", "manager"],
+    enum: ['admin', 'user', 'manager'],
   },
-  timestamps: true,
+  timestamps: {
+    createdAt: Date,
+  },
 });
 
-export const User = mongoose.model("User", userShema);
+export const User = mongoose.model('User', userShema);
