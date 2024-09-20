@@ -13,17 +13,22 @@ export const registerController = async (req, res) => {
   const user = await User.findOne({ username });
 
   if (user) {
-    res.status(400).json({ message: 'User already exists' });
+    return res.status(400).json({ message: 'User already exists' });
   }
 
   try {
     const hashPassword = await bcrypt.hash(password, 10);
     const newUser = new User({ username, password: hashPassword, role });
 
+    console.log(newUser, 'newUser');
+
     await newUser.save();
+
+    console.log(newUser, 'newUser2');
 
     return res.status(201).json({ message: 'User created successfully' });
   } catch (err) {
+    console.log(err, 'err');
     return res.status(400).json({ message: 'Invalid data' });
   }
 };
@@ -50,7 +55,7 @@ export const loginController = async (req, res) => {
     }
 
     const token = jwt.sign(
-      { userName: user._id, role: user.role },
+      { username: user._id, role: user.role },
       process.env.JWT_SECRET,
       { expiresIn: '1h' }
     );
